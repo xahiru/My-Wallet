@@ -83,7 +83,7 @@ public class AccountsActivity extends ListActivity {
 				Toast.makeText(getApplicationContext(),
 						editSelectedString, Toast.LENGTH_SHORT).show();
 				
-				Intent editIntent = new Intent();
+				
 								
 				startAddorEdit(editSelectedString);
 				

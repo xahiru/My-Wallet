@@ -30,6 +30,8 @@
     <string name="accName">Account Name</string>
     <string name="details">Details</string>
     <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="saveChanges">Save Changes</string>
 
     <string-array name="accType">
         <item>Saving</item>

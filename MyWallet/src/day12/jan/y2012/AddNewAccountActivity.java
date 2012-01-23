@@ -6,6 +6,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -71,38 +72,105 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 		btnAdd.setOnClickListener(this);
 		btnCancel = (Button) findViewById(R.id.btnCancelAccountAdd);
 		btnCancel.setOnClickListener(this);
-		
+
 		Bundle editBundle = getIntent().getExtras();
-		
-		if(editBundle != null ){
-			//if (string  stored in the bundleextra get the cursor
-			 String comp = editBundle.get(WalletDb.C_ACC_NAME).toString();
-								 
-			 Log.d(TAG,comp);
-			 
-			 
-			 MyWalletApplication.db = MyWalletApplication.walletDbHelper
-				.getReadableDatabase(); // open db for writing
-		try {
-			Cursor cursor = MyWalletApplication.db.query(
-					WalletDb.TABLE_ACCOUNT, null, null, null, null, null, null);
 
-//			Log.d(TAG,cursor.getString(cursor.getColumnIndex(WalletDb.C_ACC_TYPE)));
-			if(cursor!= null){
-				//set ui here
-				btnAdd.setText(R.string.edit);
-				
+		if (editBundle != null) {
+			// if (string stored in the bundleextra get the cursor
+			String comp = editBundle.get(WalletDb.C_ACC_NAME).toString();
+
+			Log.d(TAG, comp);
+
+			MyWalletApplication.db = MyWalletApplication.walletDbHelper
+					.getReadableDatabase(); // open db for writing
+			try {
+				Cursor cursor = MyWalletApplication.db.query(
+						WalletDb.TABLE_ACCOUNT, WalletDb.accountColArray, null,
+						null, null, null, null);
+
+				// Cursor cursor =
+				// MyWalletApplication.db.rawQuery("Select * from accounts",
+				// null);
+				// Log.d(TAG,cursor.getString(cursor.getColumnIndex(WalletDb.C_ACC_TYPE)));
+
+				while (cursor.moveToNext()) {
+					Log.d(TAG, (cursor.getString(cursor
+							.getColumnIndex(WalletDb.C_ACC_NAME))));
+
+					if (cursor.getString(
+							cursor.getColumnIndex(WalletDb.C_ACC_NAME)).equals(
+							comp)) {
+
+						Log.d(TAG, "this is the raw");
+
+						Log.d(TAG, (cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_OPENING_BALANCE))));
+						Log.d(TAG, (cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_CURRENCY))));
+						Log.d(TAG, (cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_DETAILS))));
+						Log.d(TAG, (cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_MIN_BALANCE))));
+						Log.d(TAG, (cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_ACC_TYPE))));
+
+						// set ui here
+						btnAdd.setText(R.string.saveChanges);
+						edtxtAccName.setText(cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_ACC_NAME)));
+						edtxtAccDetails.setText(cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_DETAILS)));
+						edtxtOPBalance.setText(cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_OPENING_BALANCE)));
+						edtxtMinBalance.setText(cursor.getString(cursor
+								.getColumnIndex(WalletDb.C_MIN_BALANCE)));
+
+						// set Spinners type and currenc
+						Resources res = getResources();
+						String acctypes[] = res.getStringArray(R.array.accType);
+						String currency[] = res.getStringArray(R.array.currencyType);
+
+						Log.d(TAG, String.valueOf(getArrayIndex(acctypes,
+								cursor.getString(cursor
+										.getColumnIndex(WalletDb.C_ACC_TYPE)))));
+
+						spnAccType
+								.setSelection(getArrayIndex(
+										acctypes,
+										cursor.getString(cursor
+												.getColumnIndex(WalletDb.C_ACC_TYPE))));
+						spnCurrency
+						.setSelection(getArrayIndex(
+								currency,
+								cursor.getString(cursor
+										.getColumnIndex(WalletDb.C_CURRENCY))));
+
+
+					}
+
+				}
+				/*
+				 * 
+				 * if(cursor!= null){ //set ui here
+				 * btnAdd.setText(R.string.saveChanges); //
+				 * edtxtAccName.setText(
+				 * cursor.getString(cursor.getColumnIndex(WalletDb
+				 * .C_ACC_NAME)));
+				 * 
+				 * // Log.d(TAG,cursor.getString(cursor.getColumnIndex(WalletDb.
+				 * C_ACC_TYPE))); Log.d(TAG,String.valueOf(cursor.getCount()));
+				 * 
+				 * Log.d(TAG,cursor.toString());
+				 * 
+				 * }
+				 */
+
+			} catch (SQLException e) {
+				// TODO: handle exception
 			}
-			
-		} catch (SQLException e) {
-			// TODO: handle exception
-		}
-	
 
-		MyWalletApplication.db.close();// close after writing
-		
-		
-			 
+			MyWalletApplication.db.close();// close after writing
+
 		}
 
 		intent = new Intent();
@@ -196,6 +264,17 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// do nothing
 
+	}
+
+	private int getArrayIndex(String[] searchArr, String item) {
+
+		int length = searchArr.length;
+		for (int i = 0; i < length; i++) {
+//			Log.d("InsideLoop", String.valueOf(i));
+			if (searchArr[i].equals(item))
+					return i;
+		}
+		return -1;
 	}
 
 }
