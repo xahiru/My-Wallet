@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:key="username"
+        android:title="@string/username" />
+    <EditTextPreference
+        android:key="password"
+        android:title="@string/password" />
+
+    <CheckBoxPreference
+
+        android:summaryOff="off"
+        android:defaultValue="0"
+        android:key="login"
+        android:title="@string/enbaleLogin" />
+    
+    <CheckBoxPreference
+
+        android:summaryOff="off"
+        android:defaultValue="0"
+        android:key="alerts"
+        android:title="@string/enbaleAlerts" />
+
+</PreferenceScreen>
