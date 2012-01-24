@@ -90,7 +90,7 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 			break;
 			
 		case CURRENCY_CONVERTER:
-			
+			startActivity(new Intent(this, CurrencyConverterActiviy.class));
 			break;
 
 		default:

@@ -14,7 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="numberDecimal" >
+            android:inputType="numberDecimal" 
+            android:text="0">
 
             <requestFocus />
         </EditText>
@@ -23,7 +24,9 @@
             android:id="@+id/spnCurrencySelector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1" 
+        	android:entries="@array/currencyType"
+        	/>"
 
     </LinearLayout>
 
@@ -36,7 +39,7 @@
             android:id="@+id/txtcurrencyResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Result"
+            android:text="@string/result"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>

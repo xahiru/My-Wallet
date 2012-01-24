@@ -32,6 +32,7 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="saveChanges">Save Changes</string>
+    <string name="result">Result</string>
 
     <string-array name="accType">
         <item>Saving</item>
@@ -40,7 +41,6 @@
         <item>Cash</item>
         <item>other</item>
     </string-array>
-    
     <string-array name="currencyType">
         <item>USD</item>
         <item>MRF</item>

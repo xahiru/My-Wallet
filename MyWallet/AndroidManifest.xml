@@ -13,6 +13,7 @@
         <activity android:name=".PrefsActivity" />
         <activity android:name=".AccountsActivity" />
         <activity android:name=".AddNewAccountActivity" />
+        <activity android:name=".CurrencyConverterActiviy" />
         <activity
             android:name=".MyWalletActivity"
             android:label="@string/app_name" >
