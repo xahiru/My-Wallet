@@ -30,9 +30,15 @@
     <string name="accName">Account Name</string>
     <string name="details">Details</string>
     <string name="edit">Edit</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="saveChanges">Save Changes</string>
     <string name="result">Result</string>
+    <string name="rate">Rate</string>
+    <string name="currencyname">Currency Name</string>
+    <string name="serverURL">Automatic update server URL</string>
+    <string name="kk">ދިވެހި</string>
 
     <string-array name="accType">
         <item>Saving</item>

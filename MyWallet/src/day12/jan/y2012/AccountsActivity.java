@@ -80,8 +80,8 @@ public class AccountsActivity extends ListActivity {
 				 */
 				String editSelectedString;
 				editSelectedString = parent.getItemAtPosition(position).toString();
-				Toast.makeText(getApplicationContext(),
-						editSelectedString, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(),
+//						editSelectedString, Toast.LENGTH_SHORT).show();
 				
 				
 								
