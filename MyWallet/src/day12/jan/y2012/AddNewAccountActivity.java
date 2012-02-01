@@ -49,6 +49,7 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 	private Intent intent;
 	String str = "val";
+	Bundle editBundle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +74,16 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 		btnCancel = (Button) findViewById(R.id.btnCancelAccountAdd);
 		btnCancel.setOnClickListener(this);
 
-		Bundle editBundle = getIntent().getExtras();
+		editBundle = getIntent().getExtras();
 
 		if (editBundle != null) {
 			// if (string stored in the bundleextra get the cursor
 			String comp = editBundle.get(WalletDb.C_ACC_NAME).toString();
+			/*
+			 * above code is not need..its not logic to compare the string beign
+			 * passed with sting store coz the passed one is the stored one
+			 * instead u can just get the cursor with the value
+			 */
 
 			Log.d(TAG, comp);
 
@@ -128,23 +134,19 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 						// set Spinners type and currenc
 						Resources res = getResources();
 						String acctypes[] = res.getStringArray(R.array.accType);
-						String currency[] = res.getStringArray(R.array.currencyType);
+						String currency[] = res
+								.getStringArray(R.array.currencyType);
 
 						Log.d(TAG, String.valueOf(getArrayIndex(acctypes,
 								cursor.getString(cursor
 										.getColumnIndex(WalletDb.C_ACC_TYPE)))));
 
-						spnAccType
-								.setSelection(getArrayIndex(
-										acctypes,
-										cursor.getString(cursor
-												.getColumnIndex(WalletDb.C_ACC_TYPE))));
-						spnCurrency
-						.setSelection(getArrayIndex(
-								currency,
-								cursor.getString(cursor
+						spnAccType.setSelection(getArrayIndex(acctypes, cursor
+								.getString(cursor
+										.getColumnIndex(WalletDb.C_ACC_TYPE))));
+						spnCurrency.setSelection(getArrayIndex(currency, cursor
+								.getString(cursor
 										.getColumnIndex(WalletDb.C_CURRENCY))));
-
 
 					}
 
@@ -179,6 +181,7 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
+
 		if (v == btnAdd) {
 
 			accountName = edtxtAccName.getText().toString();
@@ -211,8 +214,27 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 			MyWalletApplication.db = MyWalletApplication.walletDbHelper
 					.getWritableDatabase(); // open db for writing
-			MyWalletApplication.db.insertOrThrow(WalletDb.TABLE_ACCOUNT, null,
-					values);
+
+			if (editBundle == null) {
+				// insert new account into db
+				MyWalletApplication.db.insertOrThrow(WalletDb.TABLE_ACCOUNT,
+						null, values);
+				values.put("oldname", "");// this is to inform accounts activity
+											// that its a new ui
+											// string(accountname)
+			} else {
+				// update account here
+				//some checks needs to be performed here ....its should be mentioned in the documentation as constrains
+				
+				 int i = MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, values,WalletDb.C_ACC_NAME+" = ?" , new String [] { editBundle.get(WalletDb.C_ACC_NAME).toString()} );
+				
+				Log.d(TAG, "updated: "+i+" rows");
+				
+				values.put("oldname", editBundle.get(WalletDb.C_ACC_NAME)
+						.toString());// this is for UI to remove old name and
+										// repalce with new name
+				// setResult(Activity.RESULT_CANCELED, intent);
+			}
 
 			MyWalletApplication.db.close();
 
@@ -223,12 +245,13 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 			intent.putExtras(b);
 
 			setResult(Activity.RESULT_OK, intent);
-
 			Log.d(TAG, b.getParcelable("val").toString());
+
 			finish();
 			// finally finish
 
 		}
+
 		if (v == btnCancel) {
 			intent.putExtra("val", str);
 			setResult(Activity.RESULT_CANCELED, intent);
@@ -270,9 +293,9 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 		int length = searchArr.length;
 		for (int i = 0; i < length; i++) {
-//			Log.d("InsideLoop", String.valueOf(i));
+			// Log.d("InsideLoop", String.valueOf(i));
 			if (searchArr[i].equals(item))
-					return i;
+				return i;
 		}
 		return -1;
 	}

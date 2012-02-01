@@ -28,6 +28,7 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 	private static final String TAG = MyWalletActivity.class.getSimpleName();
 	// private MyWalletApplication wallet;
 	private Button btnAccount;
+	private Button btnTransactions;
 	private AlertDialog dialog;
 	static int retryCounter = 0;
 	
@@ -45,6 +46,9 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 
 		btnAccount = (Button) findViewById(R.id.btnAccount);
 		btnAccount.setOnClickListener(this);
+		
+		btnTransactions = (Button)findViewById(R.id.btnManageTransections);
+		btnTransactions.setOnClickListener(this);
 
 		/*
 		 * If its not first run and preference is checked for loging at startup
@@ -109,6 +113,10 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(this,AccountsActivity.class));
 			
 
+		}
+		
+		if( view == btnTransactions ){
+			startActivity(new Intent(this,TransactionActivity.class));
 		}
 
 	}

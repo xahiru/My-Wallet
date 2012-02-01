@@ -39,6 +39,9 @@
     <string name="currencyname">Currency Name</string>
     <string name="serverURL">Automatic update server URL</string>
     <string name="kk">ދިވެހި</string>
+    <string name="date">Date</string>
+    <string name="amount">Amount</string>
+    <string name="payee">Payee</string>
 
     <string-array name="accType">
         <item>Saving</item>
@@ -47,6 +50,19 @@
         <item>Cash</item>
         <item>other</item>
     </string-array>
+    
+    <string-array name="status">
+        <item>Reconciled</item>
+        <item>unreconciled</item>
+        <item>Cleared</item>
+    </string-array>
+    
+   <string-array name="type">
+       <item >Income</item>
+       <item >Expense</item>
+       <item >Transfer</item>
+   </string-array>
+    
     <string-array name="currencyType">
         <item>USD</item>
         <item>MRF</item>

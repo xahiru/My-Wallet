@@ -43,7 +43,7 @@ public class AccountsActivity extends ListActivity {
 		acc = new ArrayList<String>();
 
 		MyWalletApplication.db = MyWalletApplication.walletDbHelper
-				.getWritableDatabase(); // open db for writing
+				.getWritableDatabase(); // open db for writing ....actually writing is not neccesary here
 		try {
 			Cursor cursor = MyWalletApplication.db.query(
 					WalletDb.TABLE_ACCOUNT, null, null, null, null, null, null);
@@ -152,6 +152,11 @@ public class AccountsActivity extends ListActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		/*
+		 * this code is used to update UI (list view with the account lists)
+		 */
+		/*
 		if (resultCode == Activity.RESULT_OK) {
 			Bundle b = data.getExtras();
 			Log.d(TAG, b.toString());
@@ -162,10 +167,24 @@ public class AccountsActivity extends ListActivity {
 															// (b.putParceble("val"));
 			 contval = b.getParcelable("val");
 			Log.d(TAG, contval.get(WalletDb.C_ACC_NAME).toString());
+			/*
+			 * updates the oldname from ui
+			 */
+		/*
+			if(contval.get("oldname") != ""){
+				acc.remove(contval.get("oldname"));
+				Log.d(TAG,contval.get("oldname").toString());
+			}
 			acc.add(contval.get(WalletDb.C_ACC_NAME).toString());
 		}
-
+*/
+		/*
+		 * Late i discovered that onCreate recreates everything so mannual UI update is not neccessary
+		 * as oncreates retrieve data from database
+		 */
+		
 		super.onActivityResult(requestCode, resultCode, data);
+		onCreate(null); 
 	}
 	
 	private void startAddorEdit(String i){
