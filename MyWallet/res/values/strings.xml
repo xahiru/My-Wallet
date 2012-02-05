@@ -42,6 +42,7 @@
     <string name="date">Date</string>
     <string name="amount">Amount</string>
     <string name="payee">Payee</string>
+    <string name="deleteConfirmation">Are you sure, you want to delete this account?</string>
 
     <string-array name="accType">
         <item>Saving</item>

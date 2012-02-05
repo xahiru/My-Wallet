@@ -3,9 +3,12 @@ package day12.jan.y2012;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -16,9 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class AccountsActivity extends ListActivity {
@@ -26,6 +29,8 @@ public class AccountsActivity extends ListActivity {
 	private static final String TAG = AccountsActivity.class.getSimpleName();
 	private static final int ADD_NEW_ACCOUNT = Menu.FIRST;
 	private static final int REPORTS = Menu.FIRST +1;
+	
+	private static final int DELETE_ACCOUNT = 0;
 
 	private String[] Accounts = new String[] { "hello", "no accounts to show",
 			"add new account from menu" };
@@ -35,6 +40,10 @@ public class AccountsActivity extends ListActivity {
 	int requestCode;
 	String accountName = "no accounts to display";//"drop table if exists account";
 	ContentValues contval;
+	
+	private String editSelectedString;
+	
+	private boolean longpressed = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +84,12 @@ public class AccountsActivity extends ListActivity {
 		lvAccount.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(!longpressed){
+				
 				/*
 				 * call the edit accounts from here
 				 */
-				String editSelectedString;
+				
 				editSelectedString = parent.getItemAtPosition(position).toString();
 //				Toast.makeText(getApplicationContext(),
 //						editSelectedString, Toast.LENGTH_SHORT).show();
@@ -89,8 +100,38 @@ public class AccountsActivity extends ListActivity {
 				
 
 			}
+				longpressed = false; /*
+				this is to handle the differentiation between a press and a longpress
+				
+				*/
+			}
 
 		});
+		
+		lvAccount.setOnItemLongClickListener(new OnItemLongClickListener() {
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Toast.makeText(getApplicationContext(), "want to delete!!", Toast.LENGTH_SHORT).show();
+			
+				/*
+				 * do the confirmation here
+				 * 
+				 * deletion will be done in the dialog onclick method
+				 *
+				 */
+				editSelectedString = parent.getItemAtPosition(position).toString();
+				
+				showDialog(DELETE_ACCOUNT);
+				
+				longpressed = true;
+				
+				return false;
+			}
+		});
+		
+/// add code referesh UI
 
 	}
 
@@ -184,7 +225,8 @@ public class AccountsActivity extends ListActivity {
 		 */
 		
 		super.onActivityResult(requestCode, resultCode, data);
-		onCreate(null); 
+		onCreate(null); /*
+		this code alones update UI*/
 	}
 	
 	private void startAddorEdit(String i){
@@ -202,5 +244,39 @@ public class AccountsActivity extends ListActivity {
 			startActivityForResult(
 					ii, requestCode);
 		}
+	}
+	
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dlg;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch (id) {
+		case DELETE_ACCOUNT:
+			builder.setTitle(R.string.deleteConfirmation);
+			builder.setPositiveButton(R.string.delete, new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//delete the codes from here..
+					Log.d(TAG, "deleted");
+					
+					MyWalletApplication.db = MyWalletApplication.walletDbHelper
+					.getWritableDatabase();
+					
+					MyWalletApplication.db.delete(WalletDb.TABLE_ACCOUNT, WalletDb.C_ACC_NAME+" = ?", new String [] { editSelectedString});
+					
+					MyWalletApplication.db.close();// close after writing
+				}
+			});
+			builder.setCancelable(true);
+			
+			break;
+
+		default:
+			break;
+		}
+		dlg = builder.create();
+		return dlg;
 	}
 }
