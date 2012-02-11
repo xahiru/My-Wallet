@@ -1,5 +1,6 @@
 package day12.jan.y2012;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -50,6 +52,8 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 	private Intent intent;
 	String str = "val";
 	Bundle editBundle;
+	
+	ArrayList<String> currencyArray;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,32 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newaccount);
 
+		currencyArray = new ArrayList<String>();
+		
+		MyWalletApplication.db = MyWalletApplication.walletDbHelper
+				.getWritableDatabase(); // open db for writing ....actually
+										// writing is not neccesary here
+		try {
+			Cursor cursor = MyWalletApplication.db
+					.query(WalletDb.TABLE_CURRENCY, null, null, null, null,
+							null, null);
+
+			while (cursor.moveToNext()) {
+				
+				currencyArray.add(cursor.getString(cursor
+						.getColumnIndex(WalletDb.CURRENCY_NAME)));
+
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, currencyArray);
+		
+		
+		
 		edtxtAccName = (EditText) findViewById(R.id.edttxtAccName);
 		edtxtAccDetails = (EditText) findViewById(R.id.edttxtAccDetails);
 		edtxtOPBalance = (EditText) findViewById(R.id.edttxtAccBalance);
@@ -68,6 +98,11 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 		spnCurrency = (Spinner) findViewById(R.id.spnCurrency);
 		spnCurrency.setId(SPINNER_CURENCY);
 		spnCurrency.setOnItemSelectedListener(this);
+		if (!currencyArray.isEmpty()) {
+			Log.d(TAG,currencyArray.toString());
+			spnCurrency.setAdapter(adapter);
+		}
+		
 
 		btnAdd = (Button) findViewById(R.id.btnAddAccount);
 		btnAdd.setOnClickListener(this);
@@ -131,15 +166,28 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 						edtxtMinBalance.setText(cursor.getString(cursor
 								.getColumnIndex(WalletDb.C_MIN_BALANCE)));
 
-						// set Spinners type and currenc
+						// set Spinners type and currency
 						Resources res = getResources();
 						String acctypes[] = res.getStringArray(R.array.accType);
-						String currency[] = res
-								.getStringArray(R.array.currencyType);
+						
+						String currency[];
+						if (currencyArray.isEmpty())
+							currency = res.getStringArray(R.array.currencyType);
+						else
+						 currency = currencyArray.toArray(new String[currencyArray.size()]); /*
+						previously it was loaded from resource...however if its done that way now..arrayoutofbound error will be caused on passing
+						to getArrayIndex..coz it'll try to compare fixed length array with array with unknown length
+						*/
 
 						Log.d(TAG, String.valueOf(getArrayIndex(acctypes,
 								cursor.getString(cursor
 										.getColumnIndex(WalletDb.C_ACC_TYPE)))));
+
+						/*
+						 * Instead of loading currency from resource array, its
+						 * better to load them from database; so first oncreate
+						 * is changed to load it from DB
+						 */
 
 						spnAccType.setSelection(getArrayIndex(acctypes, cursor
 								.getString(cursor
@@ -177,7 +225,7 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 		intent = new Intent();
 
-	}
+	}// end of onCreate
 
 	@Override
 	public void onClick(View v) {
@@ -224,15 +272,19 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 											// string(accountname)
 			} else {
 				// update account here
-				//some checks needs to be performed here ....its should be mentioned in the documentation as constrains
-				
-				 int i = MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, values,WalletDb.C_ACC_NAME+" = ?" , new String [] { editBundle.get(WalletDb.C_ACC_NAME).toString()} );
-				
-				Log.d(TAG, "updated: "+i+" rows");
-				
+				// some checks needs to be performed here ....its should be
+				// mentioned in the documentation as constrains
+
+				int i = MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT,
+						values, WalletDb.C_ACC_NAME + " = ?",
+						new String[] { editBundle.get(WalletDb.C_ACC_NAME)
+								.toString() });
+
+				Log.d(TAG, "updated: " + i + " rows");
+
 				values.put("oldname", editBundle.get(WalletDb.C_ACC_NAME)
 						.toString());// this is for UI to remove old name and
-										// repalce with new name
+										// replace with new name
 				// setResult(Activity.RESULT_CANCELED, intent);
 			}
 

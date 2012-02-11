@@ -1,5 +1,7 @@
 package day12.jan.y2012;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +9,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +24,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyWalletActivity extends Activity implements OnClickListener {
+	
+	private static final String TAG = MyWalletActivity.class.getSimpleName();
+	
 	private static final int SETTINGS = Menu.FIRST;
 	private static final int SEARCH = Menu.FIRST + 1;
 	private static final int CURRENCY_CONVERTER = Menu.FIRST +2;
-	private static final String TAG = MyWalletActivity.class.getSimpleName();
+	
 	// private MyWalletApplication wallet;
 	private Button btnAccount;
 	private Button btnTransactions;
@@ -116,7 +124,29 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 		}
 		
 		if( view == btnTransactions ){
+			
+			ArrayList<String> accountsArray = new ArrayList<String>();
+
+			MyWalletApplication.db = MyWalletApplication.walletDbHelper
+					.getWritableDatabase(); // open db for writing ....actually
+											// writing is not neccesary here
+			try {
+				Cursor cursor = MyWalletApplication.db.query(
+						WalletDb.TABLE_ACCOUNT, null, null, null, null, null, null);
+
+				while (cursor.moveToNext()) {
+					accountsArray.add(cursor.getString(cursor
+							.getColumnIndex(WalletDb.C_ACC_NAME)));
+
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+			}
+
+			if (!accountsArray.isEmpty())
 			startActivity(new Intent(this,TransactionActivity.class));
+			else
+				Toast.makeText(this, "No accounts added yet!!! Please add one", Toast.LENGTH_LONG).show();
 		}
 
 	}

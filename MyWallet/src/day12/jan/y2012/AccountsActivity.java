@@ -267,9 +267,12 @@ public class AccountsActivity extends ListActivity {
 					MyWalletApplication.db.delete(WalletDb.TABLE_ACCOUNT, WalletDb.C_ACC_NAME+" = ?", new String [] { editSelectedString});
 					
 					MyWalletApplication.db.close();// close after writing
+					
+					
 				}
 			});
 			builder.setCancelable(true);
+			
 			
 			break;
 
