@@ -37,11 +37,11 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 	private String accountName;
 	private String accountDetails;
-	private int openingBalance;
+	private double openingBalance;
 	private int openDate;
-	private int balance;
+	private double balance;
 	private String currency;
-	private int minBalance;
+	private double minBalance;
 	private String accountType;
 
 	private ContentValues values;
@@ -233,10 +233,9 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 		if (v == btnAdd) {
 
 			accountName = edtxtAccName.getText().toString();
-			openingBalance = Integer.parseInt(edtxtOPBalance.getText()
-					.toString());
+			openingBalance = Double.parseDouble(edtxtOPBalance.getText().toString());
 			balance = openingBalance;
-			minBalance = Integer.parseInt(edtxtMinBalance.getText().toString());
+			minBalance = Double.parseDouble(edtxtMinBalance.getText().toString());
 
 			accountDetails = edtxtAccDetails.getText().toString();
 

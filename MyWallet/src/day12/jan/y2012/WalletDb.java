@@ -32,8 +32,8 @@ public class WalletDb extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_ACCOUNT = "CREATE TABLE "
 			+ TABLE_ACCOUNT + " (" + C_ID + " int primary key , " + C_ACC_NAME
-			+ " text," + C_BALANCE + " int," + C_MIN_BALANCE + " int,"
-			+ C_OPENING_BALANCE + " int," + C_ACC_TYPE + " text," + C_CURRENCY
+			+ " text," + C_BALANCE + " double," + C_MIN_BALANCE + " double,"
+			+ C_OPENING_BALANCE + " double," + C_ACC_TYPE + " text," + C_CURRENCY
 			+ " text," + C_DETAILS + " text," + C_OPEN_DATE + " int)";
 
 	public static final String[] accountColArray = { C_ACC_NAME, C_BALANCE,
@@ -63,7 +63,7 @@ public class WalletDb extends SQLiteOpenHelper {
 	 * Transaction Table
 	 */
 
-	public static final String TABLE_TRANSACTION = "transactionr";
+	public static final String TABLE_TRANSACTION = "transactionr"; //cannot use the word "transaction" as it is a reserve word of sqlite
 
 	public static final String TRANSACTION_ID = BaseColumns._ID;
 	public static final String TR_PAYEE = "payee";
@@ -81,7 +81,7 @@ public class WalletDb extends SQLiteOpenHelper {
 			+ TABLE_TRANSACTION + "(" +TRANSACTION_ID+ "int primary key,"
 			
 			+ TR_PAYEE + " text," + TR_TYPE + " text," + TR_DATE + " text,"
-			+ TR_AMOUNT + " text," + TR_ACCOUNT + " text," + TR_CATOGARY
+			+ TR_AMOUNT + " double," + TR_ACCOUNT + " text," + TR_CATOGARY
 			+ " text," + TR_DETAILS + " text," + TR_STATUS + " text)";
 	
 	
