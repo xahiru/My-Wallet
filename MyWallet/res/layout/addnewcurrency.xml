@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/edttxtCurrencyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/currencyname" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/edttxtRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/rate"
+            android:numeric="decimal"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edttxtSimbol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/symbol"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/edttxtServerURL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/serverURL" />
+    </LinearLayout>
+
+</LinearLayout>

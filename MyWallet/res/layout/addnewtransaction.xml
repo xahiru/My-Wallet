@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/nTrsspnEdtxtAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/amount"
+            android:inputType="numberDecimal"
+            android:text="0" >
+
+            <requestFocus />
+        </EditText>
+
+        <Spinner
+            android:id="@+id/nTrsspnAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/nTrsspnEdtxtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/date"
+                android:inputType="date"
+                android:layout_weight="3" />
+
+            <Button
+                android:id="@+id/nTrsbtnDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="setitlater" 
+                 android:layout_weight="1"/>
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/nTrsspnType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/type" />
+
+        <Spinner
+            android:id="@+id/nTrsspnStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/status" />
+
+        <EditText
+            android:id="@+id/nTrsEdtxtDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/details"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/nTrsEdtxtPayee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:hint="@string/payee"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/nTransbtnPayee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="setthislate" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/nTrnsBtnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/add" />
+
+            <Button
+                android:id="@+id/nTrnsBtnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/cancel" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
