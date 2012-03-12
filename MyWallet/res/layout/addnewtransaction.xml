@@ -8,6 +8,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
+        
+        <!-- rev 2 -->
 
         <EditText
             android:id="@+id/nTrsspnEdtxtAmount"

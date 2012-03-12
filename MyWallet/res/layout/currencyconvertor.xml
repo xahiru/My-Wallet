@@ -5,7 +5,6 @@
     android:orientation="vertical" >
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -14,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="numberDecimal" 
-            android:text="0">
+            android:inputType="numberDecimal"
+            android:text="0" >
 
             <requestFocus />
         </EditText>
@@ -24,16 +23,26 @@
             android:id="@+id/spnCurrencySelector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" 
-        	android:entries="@array/currencyType"
-        	/>"
-
+            android:layout_weight="1"
+            android:entries="@array/currencyType" />
     </LinearLayout>
 
     <LinearLayout
-
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
+
+        <Spinner
+            android:id="@+id/spnToCurrency"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/currencyType" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray" >
 
         <TextView
             android:id="@+id/txtcurrencyResult"
@@ -41,7 +50,25 @@
             android:layout_height="wrap_content"
             android:text="@string/result"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currencylist"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/lvCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+        </ListView>
     </LinearLayout>
 
 </LinearLayout>

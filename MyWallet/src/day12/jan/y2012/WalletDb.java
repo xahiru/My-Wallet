@@ -51,13 +51,15 @@ public class WalletDb extends SQLiteOpenHelper {
 	 */
 	public static final String TABLE_CURRENCY = "currency";
 
+	public static final String CURRENCY_ID = BaseColumns._ID;
 	public static final String CURRENCY_NAME = "currencyname";
 	public static final String CURRENCY_RATE = "exchangerate";
+	public static final String CURRENCY_SYMBOL = "symbol";
 	public static final String CURRENCY_UDATE_URL = "url";
 
 	public static final String CREATE_CURRENCY = "CREATE TABLE "
-			+ TABLE_CURRENCY + "( " + CURRENCY_NAME + " text," + CURRENCY_RATE
-			+ " int," + CURRENCY_UDATE_URL + " text)";
+			+ TABLE_CURRENCY + "( " +CURRENCY_ID + " integer primary key AUTOINCREMENT,"+ CURRENCY_NAME + " text," + CURRENCY_RATE
+			+ " int," +CURRENCY_SYMBOL+" text,"+ CURRENCY_UDATE_URL + " text)";
 
 	/*
 	 * Transaction Table
@@ -75,11 +77,10 @@ public class WalletDb extends SQLiteOpenHelper {
 	public static final String TR_DETAILS = C_DETAILS;
 	public static final String TR_STATUS = "status";
 
-	//+ TRANSACTION_ID + " int primary key,"
+	//+ TRANSACTION_ID + " int primary key,AUTOINCREMENT"
 	
 	public static final String CREATE_TRANSACTION = "CREATE TABLE "
-			+ TABLE_TRANSACTION + "(" +TRANSACTION_ID+ "int primary key,"
-			
+			+ TABLE_TRANSACTION + "( " +TRANSACTION_ID+ " integer primary key AUTOINCREMENT,"
 			+ TR_PAYEE + " text," + TR_TYPE + " text," + TR_DATE + " text,"
 			+ TR_AMOUNT + " double," + TR_ACCOUNT + " text," + TR_CATOGARY
 			+ " text," + TR_DETAILS + " text," + TR_STATUS + " text)";

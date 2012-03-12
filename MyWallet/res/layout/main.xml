@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         
         android:orientation="vertical" >
+        
+        <!-- rev 2 -->
 
         <TextView
             android:layout_width="fill_parent"

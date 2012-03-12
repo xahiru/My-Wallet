@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 public class AddNewAccountActivity extends Activity implements OnClickListener,
 		OnItemSelectedListener {
+	//rev 2
 	private static final String TAG = AddNewAccountActivity.class
 			.getSimpleName();
 	private Button btnAdd;

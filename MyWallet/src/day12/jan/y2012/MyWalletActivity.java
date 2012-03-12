@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,6 +68,24 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 			popDialog(); // login screen
 
 		}else{
+			
+			ContentValues mContent = new ContentValues();
+			
+			mContent.put(WalletDb.CURRENCY_NAME, "USD");
+			mContent.put(WalletDb.CURRENCY_RATE, 15.42);
+			mContent.put(WalletDb.CURRENCY_SYMBOL, "$");
+			mContent.put(WalletDb.CURRENCY_UDATE_URL, "none");
+			
+			CurrencyConverterActiviy.writetoDB(mContent);
+			
+			mContent.clear();
+			
+			mContent.put(WalletDb.CURRENCY_NAME, "MRF");
+			mContent.put(WalletDb.CURRENCY_RATE, 1);
+			mContent.put(WalletDb.CURRENCY_SYMBOL, "MRF");
+			mContent.put(WalletDb.CURRENCY_UDATE_URL, "none");
+			
+			CurrencyConverterActiviy.writetoDB(mContent);
 			
 		}
 			
