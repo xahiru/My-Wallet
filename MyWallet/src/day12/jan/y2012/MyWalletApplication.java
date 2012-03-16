@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class MyWalletApplication extends Application  implements OnSharedPreferenceChangeListener
 {
-	//rev 2
+	//rev 3
 	private static final String TAG = MyWalletApplication.class.getSimpleName();
 	public static int runCount =0;
 	private SharedPreferences sharedPrefs;

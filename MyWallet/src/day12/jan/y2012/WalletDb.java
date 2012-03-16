@@ -14,6 +14,7 @@ public class WalletDb extends SQLiteOpenHelper {
 	/*
 	 * Account Table
 	 */
+	//rev 3
 	public static final String TABLE_ACCOUNT = "account";
 	public static final String C_ID = BaseColumns._ID;
 	public static final String C_ACC_NAME = "accountname";

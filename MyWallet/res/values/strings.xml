@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+<!-- rev 3 -->
     <string name="hello">Welcome to MyWallet!</string>
     <string name="app_name">MyWallet</string>
     <string name="OptionMenu">Options</string>

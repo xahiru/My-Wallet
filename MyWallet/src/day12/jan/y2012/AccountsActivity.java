@@ -25,7 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class AccountsActivity extends ListActivity {
-	//rev 2
+	//rev 3
 
 	private static final String TAG = AccountsActivity.class.getSimpleName();
 	private static final int ADD_NEW_ACCOUNT = Menu.FIRST;

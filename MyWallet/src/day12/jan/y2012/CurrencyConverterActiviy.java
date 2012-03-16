@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 public class CurrencyConverterActiviy extends Activity implements
 		OnItemSelectedListener {
+	//rev 3
 
 	private static final String TAG = CurrencyConverterActiviy.class
 			.getSimpleName();
@@ -125,8 +126,7 @@ public class CurrencyConverterActiviy extends Activity implements
 				new String[] { WalletDb.CURRENCY_NAME, WalletDb.CURRENCY_SYMBOL, WalletDb.CURRENCY_RATE }, new int[] {
 						R.id.textRow1, R.id.textRow2, R.id.textRow3 });
 		lvCurrencyList.setAdapter(adapter2);
-		
-		
+			
 		spnToCurrency = (Spinner)findViewById(R.id.spnToCurrency);
 		spnToCurrency.setId(SPN_TO_CURRENCY);
 		spnToCurrency.setOnItemSelectedListener(this);

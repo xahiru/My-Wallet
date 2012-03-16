@@ -8,7 +8,7 @@ package day12.jan.y2012;
 public class Login {
 	
 	
-	//rev 2
+	//rev 3
 	
 	private String storedUsername = MyWalletApplication.username;
 	private String storedPassword= MyWalletApplication.password;

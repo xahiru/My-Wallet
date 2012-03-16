@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyWalletActivity extends Activity implements OnClickListener {
-	
+	// rev 3
 	private static final String TAG = MyWalletActivity.class.getSimpleName();
 	
 	private static final int SETTINGS = Menu.FIRST;

@@ -30,6 +30,8 @@ import android.widget.Toast;
 
 public class AddTransactionActivity extends Activity implements
 		OnItemSelectedListener, OnClickListener {
+	
+	// rev 3
 
 	private static final String TAG = AddTransactionActivity.class
 			.getSimpleName();
@@ -82,7 +84,7 @@ public class AddTransactionActivity extends Activity implements
 		if (editBundle != null){
 		Log.d(TAG,
 				"At start bundle value"
-						+ String.valueOf(editBundle.getInt("ListID")));
+						+ editBundle.getString("ListID"));
 		}else{
 			Log.d(TAG,"nothing passed");
 		}
@@ -103,11 +105,14 @@ public class AddTransactionActivity extends Activity implements
 			Cursor editCursor = MyWalletApplication.db
 					.query(WalletDb.TABLE_TRANSACTION, null,
 							WalletDb.TRANSACTION_ID + " = ?",
-							new String[] { String.valueOf(editBundle.getInt("ListID")+1) }, null, null, null); 
-			/*
-			 * 1 is added to listID passed through bundle, in the above code 
-			 * in order to match with the rawid of the transactionr table as it is set to autoincrement
-			 */
+							new String[] { editBundle.getString("ListID") }, null, null, null); 
+			
+			//now it has changed no need to increment list id as primary keyis being used
+			
+//			/*
+//			 * 1 is added to listID passed through bundle, in the above code 
+//			 * in order to match with the rawid of the transactionr table as it is set to autoincrement
+//			 */
 			
 			while (editCursor.moveToNext()) {
 				Log.d(TAG, String.valueOf((editCursor.getInt(editCursor.getColumnIndex(WalletDb.TRANSACTION_ID)))));
@@ -196,11 +201,11 @@ public class AddTransactionActivity extends Activity implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		// do the initializations here
+		// do the initializations here// remove the initialization otherwise default is taken
 
-		Trns_Type = spnType.getItemAtPosition(0).toString();
-		Trns_Status = spnStatus.getItemAtPosition(0).toString();
-		Trns_Account = spnAccounts.getItemAtPosition(0).toString();
+//		Trns_Type = spnType.getItemAtPosition(0).toString();
+//		Trns_Status = spnStatus.getItemAtPosition(0).toString();
+//		Trns_Account = spnAccounts.getItemAtPosition(0).toString();
 
 		switch (parent.getId()) {
 		case TYPE_SPINNER:
@@ -279,7 +284,7 @@ public class AddTransactionActivity extends Activity implements
 		if (v == btnAdd) {
 			writeToDB();
 			finish();
-			// startActivity(new Intent(null, TransactionActivity.class));
+			
 		}
 	}
 
@@ -332,10 +337,12 @@ public class AddTransactionActivity extends Activity implements
 			String sql = "Select * from " + WalletDb.TABLE_ACCOUNT + " where "
 					+ WalletDb.C_ACC_NAME + " =?";
 
-			// Log.d("Error",sql);
+			 Log.d("TransAccount",Trns_Account);
 
 			Cursor cr = MyWalletApplication.db.rawQuery(sql,
 					new String[] { Trns_Account });
+			
+			
 
 			// Log.d("EROOR", cr.toString());
 
@@ -372,6 +379,8 @@ public class AddTransactionActivity extends Activity implements
 									+ String.valueOf(newBalance));
 				}
 
+				
+				
 				ContentValues value = new ContentValues();
 				value.put(WalletDb.C_BALANCE, newBalance);
 				MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, value,
@@ -389,8 +398,10 @@ public class AddTransactionActivity extends Activity implements
 						"New Balance: " + String.valueOf(newBalance),
 						Toast.LENGTH_SHORT).show();
 
+				
 			}
 
+			
 		}
 
 		catch (SQLException e) {
@@ -404,6 +415,7 @@ public class AddTransactionActivity extends Activity implements
 			Log.d("Error", values.toString());
 		}
 
+	
 		MyWalletApplication.db.close();
 
 	}

@@ -8,7 +8,7 @@ public class PrefsActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//rev 2
+		//rev 3
 		super.onCreate(savedInstanceState);
 		
 		addPreferencesFromResource(R.xml.myprefs);

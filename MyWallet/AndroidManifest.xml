@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="10" />
-    <!-- rev 2 -->
+    <!-- rev 3 -->
 
     <application
         android:name=".MyWalletApplication"
