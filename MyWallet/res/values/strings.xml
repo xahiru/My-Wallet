@@ -2,6 +2,7 @@
 <resources>
 <!-- rev 3 -->
     <string name="hello">Welcome to MyWallet!</string>
+    <string name="lessopenining">Opening balance is less than the available amount</string>
     <string name="app_name">MyWallet</string>
     <string name="OptionMenu">Options</string>
     <string name="menu_add_account">Add new account</string>
@@ -42,9 +43,16 @@
     <string name="date">Date</string>
     <string name="amount">Amount</string>
     <string name="payee">Payee</string>
+    <string name="payees">Payees</string>
+    <string name="payeeName">Payee Name</string>
+    <string name="email">email</string>
+    <string name="contactNo">Contact Number</string>
     <string name="deleteConfirmation">Are you sure, you want to delete this account?</string>
     <string name="symbol">Currency Symbol</string>
     <string name="currencylist">Currency List</string>
+    <string name="transferto">Transfer to:</string>
+    <string name="add_payee">Add Payee</string>
+    <string name="add_category">Add Category</string>
 
     <string-array name="accType">
         <item>Saving</item>

@@ -122,15 +122,16 @@ public class TransactionActivity extends Activity implements
 			while (cursor.moveToNext()) {
 
 				String trnsAmount = cursor.getString(cursor
-						.getColumnIndex(WalletDb.TR_AMOUNT));// + "\t\t";
+						.getColumnIndex(WalletDb.TR_AMOUNT));
 				String payeeName = cursor.getString(cursor
-						.getColumnIndex(WalletDb.TR_PAYEE));// +
-															// "\t\t\t\t\t\t\t\t";
+						.getColumnIndex(WalletDb.TR_PAYEE));
 				String trnsType = cursor.getString(cursor
-						.getColumnIndex(WalletDb.TR_TYPE));// +
-															// "\t\t\t\t\t\t\t\t";
+						.getColumnIndex(WalletDb.TR_TYPE));
 
 				String trnsAcc = cursor.getString(cursor
+						.getColumnIndex(WalletDb.TR_ACCOUNT));
+				
+				String trnsToAcc = cursor.getString(cursor
 						.getColumnIndex(WalletDb.TR_ACCOUNT));
 				
 				String trnsID = cursor.getString(cursor
@@ -138,6 +139,10 @@ public class TransactionActivity extends Activity implements
 
 				idList.add(trnsID);
 				accList.add(trnsAcc);
+				
+				if(trnsType.equals("Transfer")){
+					payeeName = trnsToAcc;
+				}
 
 				Log.d(TAG, payeeName);
 				hashMap = new HashMap<String, String>();
@@ -188,6 +193,7 @@ public class TransactionActivity extends Activity implements
 		switch (item.getItemId()) {
 		case ADD_NEW_TRANSACTION:
 			startActivity(new Intent(this, AddTransactionActivity.class));
+			//
 			break;
 
 		default:
@@ -364,8 +370,10 @@ public class TransactionActivity extends Activity implements
 					
 					int restoreAmount = 0;
 					int oldBalance = 0;
+					int oldBalance2 = 0;
 					String restoreAccount= null;
 					String restoreType = null;
+					String restoreToAcc =null;
 
 					MyWalletApplication.db = MyWalletApplication.walletDbHelper
 							.getWritableDatabase();
@@ -381,7 +389,7 @@ public class TransactionActivity extends Activity implements
 						restoreAmount = newCursor.getInt(newCursor.getColumnIndex(WalletDb.TR_AMOUNT));
 						restoreAccount = newCursor.getString(newCursor.getColumnIndex(WalletDb.TR_ACCOUNT));
 						restoreType = newCursor.getString(newCursor.getColumnIndex(WalletDb.TR_TYPE));
-						
+						restoreToAcc = newCursor.getString(newCursor.getColumnIndex(WalletDb.TR_TO_ACCOUNT));
 					}
 					
 					 newCursor = MyWalletApplication.db.query(
@@ -397,18 +405,39 @@ public class TransactionActivity extends Activity implements
 					
 						ContentValues cv = new ContentValues();
 						
-					if(!restoreType.equals("Income") ){
+					if(restoreType.equals("Income") ){
 						
 						//oldBalance + restoreAmount;
+						
+						cv.put(WalletDb.C_BALANCE, oldBalance - restoreAmount);
+						MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, cv, WalletDb.C_ACC_NAME+"=?",new String[] {restoreAccount} );
+						
+												
+					}else if(restoreType.equals("Expense") ){
+					
+						cv.put(WalletDb.C_BALANCE, oldBalance + restoreAmount);
+						MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, cv, WalletDb.C_ACC_NAME+"=?",new String[] {restoreAccount} );
+					
+					}if(restoreType.equals("Transfer") ){
 						
 						cv.put(WalletDb.C_BALANCE, oldBalance + restoreAmount);
 						MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, cv, WalletDb.C_ACC_NAME+"=?",new String[] {restoreAccount} );
 						
-												
-					}else {
-					
-						cv.put(WalletDb.C_BALANCE, oldBalance - restoreAmount);
-						MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, cv, WalletDb.C_ACC_NAME+"=?",new String[] {restoreAccount} );
+						newCursor = MyWalletApplication.db.query(
+								WalletDb.TABLE_ACCOUNT, null,
+								WalletDb.C_ACC_NAME + " = ?",
+								new String[] { restoreToAcc }, null, null,
+								null);
+						 
+						 while (newCursor.moveToNext()){
+							 
+							 oldBalance2 = newCursor.getInt(newCursor.getColumnIndex(WalletDb.C_BALANCE));
+						 }
+						
+						ContentValues cv2 = new ContentValues();
+						cv2.put(WalletDb.C_BALANCE, oldBalance2 - restoreAmount);
+						
+						MyWalletApplication.db.update(WalletDb.TABLE_ACCOUNT, cv2, WalletDb.C_ACC_NAME+"=?",new String[] {restoreToAcc} );
 					}
 					
 					

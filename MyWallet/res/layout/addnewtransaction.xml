@@ -88,6 +88,28 @@
                 android:layout_weight="1"
                 android:text="setthislate" />
         </LinearLayout>
+        
+        
+        <LinearLayout
+            android:id ="@+id/lyttrnsto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txttoAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transferto"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            <Spinner
+            android:id="@+id/spnTransferToAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/status" />
+            
+            </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -38,6 +38,7 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 	// private MyWalletApplication wallet;
 	private Button btnAccount;
 	private Button btnTransactions;
+	private Button btnCatNPayee;
 	private AlertDialog dialog;
 	static int retryCounter = 0;
 	
@@ -59,6 +60,8 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 		btnTransactions = (Button)findViewById(R.id.btnManageTransections);
 		btnTransactions.setOnClickListener(this);
 
+		btnCatNPayee = (Button)findViewById(R.id.btnCatergory);
+		btnCatNPayee.setOnClickListener(this);
 		/*
 		 * If its not first run and preference is checked for loging at startup
 		 * login-screen appears
@@ -167,6 +170,14 @@ public class MyWalletActivity extends Activity implements OnClickListener {
 			else
 				Toast.makeText(this, "No accounts added yet!!! Please add one", Toast.LENGTH_LONG).show();
 		}
+		
+		
+		if(view ==  btnCatNPayee){
+			
+			startActivity (new Intent(this,PayeeNCatActivity.class));
+		}
+		
+		
 
 	}
 

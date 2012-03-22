@@ -131,17 +131,18 @@ public class CurrencyConverterActiviy extends Activity implements
 		spnToCurrency.setId(SPN_TO_CURRENCY);
 		spnToCurrency.setOnItemSelectedListener(this);
 		
-		
+		/*
 		
 		if (!currencyArray.isEmpty()) {
 			Log.d(TAG, currencyArray.toString());
 			spnCurrencySelector.setAdapter(adapter);
 			spnToCurrency.setAdapter(adapter);
 		}
-
+*/
 		txtResult = (TextView) findViewById(R.id.txtcurrencyResult);
 		edttxtCurrencyInput = (EditText) findViewById(R.id.edttxtCurrencyInput);
 
+	
 		mContext = getApplicationContext();
 
 	}
@@ -149,6 +150,7 @@ public class CurrencyConverterActiviy extends Activity implements
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
+		
 		
 		
 		double result = 0;

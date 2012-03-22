@@ -242,9 +242,15 @@ public class AddNewAccountActivity extends Activity implements OnClickListener,
 
 			Date date = new Date();
 			openDate = date.getDate();
+			
+			Resources res = getResources();
+			
+			String lessAvailable = res.getString( R.string.lessopenining);
+			
+			
 
 			if (balance < minBalance)
-				Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this,lessAvailable , Toast.LENGTH_SHORT).show();
 
 			values = new ContentValues();
 
